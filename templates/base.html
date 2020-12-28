@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <style>
+      .footer {
+        position: fixed;
+
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        background-color: #7cf29b;
+        color:black;
+        text-align: center;
+        height:40px;
+}
+  </style>
+  {% block head %}
+  {% endblock %}
+  {% block script %}
+  {% endblock script %}
+
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+{% block title %}
+    <title>Index</title>
+      {% endblock %}
+  </head>
+  <body >
+
+  <div class="containe-fluid" >
+      <div class="row" style="background-color: #7cf29b ; height: 80px">
+  <div class="col-12" style="font-family:Century;color:black" align="center">
+      <span  style=" font-size: 60px;"> CROP MAPPING</span>
+  </div>
+
+</div>
+     
+  </div>
+  {% block menu %}
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="{% url 'field:home' %}">Home</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="/admin/">Admin <span class="sr-only">(current)</span></a>
+      </li>
+         <li class="nav-item active">
+        <a class="nav-link" href="{% url 'field:indices' %}">Indices<span class="sr-only">(current)</span></a>
+      </li>
+         <li class="nav-item active">
+        <a class="nav-link" href="{% url 'field:about' %}">About Us<span class="sr-only">(current)</span></a>
+      </li>
+      
+    
+
+
+
+         <!-- <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          About Us
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="{% url 'field:office' %]">Central Office</a>
+          <a class="dropdown-item" href="{% url 'field:about' %}">About Us</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="#">Branches</a>
+        </div>
+      </li> -->
+    </ul>
+
+  </div>
+    
+
+</nav>
+{% endblock menu %}
+      <div class="container-fluid">
+      <div class="row">
+       
+
+        <div class="col-12" style=" height: max-content">
+            {% block body %} this is the body content{% endblock %}
+        
+
+         
+        </div>
+        </div>
+
+      </div>
+    </div>
+    <div class="footer">
+    <div class="container"><small>Copyright © Crop Mapping 2020</small></div>
+</div>
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  </body>
+</html>

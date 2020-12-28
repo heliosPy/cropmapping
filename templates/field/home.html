@@ -1,0 +1,166 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load leaflet_tags %}
+{% load geojson_tags %}
+
+{% block head %}
+{% leaflet_css %}
+{% leaflet_js %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+{% endblock head %}
+
+{% block body %}
+<style>
+    .leaflet-container { /* all maps */
+        width: 100%;
+        height:500px;
+
+    }
+    .django-leaflet-raw-textarea{
+        width: 100%;
+    }
+
+</style>
+
+<script>
+    function map_init_basic(fmap, options){
+        
+
+        $.getJSON("{% url 'field:allcrops' %}", function(data){
+            var allc = L.geoJson(data,{
+                onEachFeature:function(feature, layer){
+                    layer.bindPopup("<strong>" + feature.properties.farmer + " " + feature.properties.crop +"</strong>")
+                }
+            }).addTo(fmap);
+            controlLayers.addOverlay(allc, 'AllCrops');
+        });
+        $.getJSON("{% url 'field:rice' %}", function(data){
+            var rice = L.geoJson(data,{
+                onEachFeature:function(feature, layer){
+                    layer.bindPopup("<strong>" + feature.properties.farmer + " " + feature.properties.crop +"</strong>")
+                }
+            }).addTo(fmap);
+            controlLayers.addOverlay(rice, 'Rice');
+        });
+        $.getJSON("{% url 'field:maize' %}", function(data){
+            var maize = L.geoJson(data,{
+                onEachFeature:function(feature, layer){
+                    layer.bindPopup("<strong>" + feature.properties.farmer + " " + feature.properties.crop +"</strong>")
+                }
+            }).addTo(fmap);
+            controlLayers.addOverlay(maize, 'Maize');
+        });
+        $.getJSON("{% url 'field:mango' %}", function(data){
+            var mango = L.geoJson(data,{
+                onEachFeature:function(feature, layer){
+                    layer.bindPopup("<strong>" + feature.properties.farmer + " " + feature.properties.crop +"</strong>")
+                }
+            }).addTo(fmap);
+            controlLayers.addOverlay(mango, 'Mango');
+        });
+        $.getJSON("{% url 'field:cotton' %}", function(data){
+            var cotton = L.geoJson(data,{
+                onEachFeature:function(feature, layer){
+                    layer.bindPopup("<strong>" + feature.properties.farmer + " " + feature.properties.crop +"</strong>")
+                }
+            }).addTo(fmap);
+            controlLayers.addOverlay(cotton, 'cotton');
+        });
+        $.getJSON("{% url 'field:veg' %}", function(data){
+            var veg = L.geoJson(data,{
+                onEachFeature:function(feature, layer){
+                    layer.bindPopup("<strong>" + feature.properties.farmer + " " + feature.properties.crop +"</strong>")
+                }
+            }).addTo(fmap);
+            controlLayers.addOverlay(veg, 'Vegetables');
+        });
+        $.getJSON("{% url 'field:others' %}", function(data){
+            var others = L.geoJson(data,{
+                onEachFeature:function(feature, layer){
+                    layer.bindPopup("<strong>" + feature.properties.farmer + " " + feature.properties.crop +"</strong>")
+                }
+            }).addTo(fmap);
+            controlLayers.addOverlay(others, 'Other Crops');
+        });
+      
+      var controlLayers = fmap.layerscontrol;
+      controlLayers.setPosition('topright')
+
+  
+    }
+
+
+</script>
+<div class="container-fluid">
+    <div class='row'>
+        <div class='col-9'>
+            {% leaflet_map 'fmap' callback='window.map_init_basic' %}
+        </div>
+
+        <div class = 'col-3'>
+            <H2>Details</H2>
+            <ul>
+                <li>
+                    Total Number of Fields
+                : {{ total }}</li>
+                <br>
+                
+            </ul>
+            <br>
+            
+            <p><strong>
+                Select a Crop to Number of Fields:
+            </strong></p>
+           
+
+
+        <form id='crps'>
+            <label for="crops">Crop:</label>
+            <select id="crops" name="crop">
+     
+            <option value="Rice">Rice</option>
+            <option value="Maize">Maize</option>
+            <option value="Vegetables">Vegetables</option>
+            <option value="Cotton">Cotton</option>
+            <option value="Mango">Mango</option>
+            <option value="Others">Other Crops</option>          
+
+            </select>
+            <input type="submit">
+        </form>
+        <br>
+        <div id="count"></div>
+          
+        </div>
+    </div>
+</div>
+<script type='text/javascript'>
+  
+
+    var select = $("#crps");
+    select.submit(function(event){
+        event.preventDefault();
+        var crop= $('#crops').val();
+        $.ajax({
+            url: "{% url 'field:count'  %}",
+            data: {"crop":crop},
+            type: 'get',
+            success: function(data){
+                var hstr = "<p>" + crop + ' field count :  ' + data.total +"</p>" ;
+                $("#count").html(hstr);
+            }
+
+        });
+        
+        
+        
+        
+        
+
+    })
+</script>
+
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"> 
+
+{% endblock %}
