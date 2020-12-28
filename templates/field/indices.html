@@ -21,15 +21,15 @@
     </style>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-8">
+            <div class="col-9">
                 <div id="mapid"></div>
             </div>
-            <div class="col-4"> 
+            <div class="col-3"> 
+              <div style="margin: 10px; border: 5px solid rgb(11, 145, 18); padding: 3px; padding-bottom: 5px; border-radius: 10px; min-height: 150px; text-align: center;">
               
-                <H2>NDVI WMS</H2>
-                <br>
-                <p>To view ndvi map choose a date</p>
-                <br>
+                <H3 style="text-align: center;">NDVI WMS</H2>
+                <p>Select Date to View Ndvi Layer</p>
+                
                 
                
     
@@ -53,7 +53,37 @@
                 </select>
                 <input type="submit">
             </form>
-            <br>
+            
+            
+            </div>
+            <!-- Search crop Details -->
+
+            <div style="margin: 10px; border: 5px solid rgb(11, 145, 18); padding: 3px; padding-bottom: 5px; border-radius: 10px; min-height: 150px; text-align: center;">
+              
+              <H3 style="text-align: center;">Crop Details</H2>
+              <p>Search based on Crop Type and Location</p>               
+             
+  
+  
+          <form action="{% url 'field:detailct' %}">
+              <label for="ndate">Crop Type </label>
+              <select id="ndate" name="crop_type">
+       
+              <option value="Rice">Rice</option>
+              <option value="Cotton">Cotton</option>
+              <option value="Maize">Maize</option>
+              <option value="Mango">Mango</option>
+              <option value="Vegetables">Vegetables </option>
+              <option value="Others">Others</option>  
+                
+
+  
+              </select>
+              <input type="submit">
+          </form>
+          
+          
+          </div>
             <div id="count"></div>
               
             
@@ -62,7 +92,7 @@
     </div>
     
     <script>
-        var mymap = L.map('mapid').setView([18.47102, 78.92772], 10);
+        var mymap = L.map('mapid').setView([18.42615364777555, 78.81336879053919], 11);
 
         var osm = L.tileLayer(
         "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
@@ -107,6 +137,16 @@
       }
       L.control.layers(baseLayers, overlays,{autoZIndex: true}).addTo(mymap);
 
+      var layerLegend = L.Geoserver.legend(
+        "http://localhost:8080/geoserver/wms",
+        {
+          layers: "ndvi:1124",
+          style:'ndvi:ndvi5class'
+        }
+      );
+
+      layerLegend.addTo(mymap);
+
 
 
 
@@ -134,15 +174,7 @@
         var layer = "ndvi:" + crop;
         NdviWmsLayer(layer)
          
-      var layerLegend = L.Geoserver.legend(
-        "http://localhost:8080/geoserver/wms",
-        {
-          layers: "ndvi:1124",
-          style:'ndvi:ndvi5class'
-        }
-      );
-
-      layerLegend.addTo(mymap);
+     
                  
         })
 

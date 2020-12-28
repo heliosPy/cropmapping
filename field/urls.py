@@ -15,6 +15,8 @@ urlpatterns = [
     path('count/', views.featureCount, name='count'),
     path('indices/', views.indiceshome, name='indices'),
     path('about/', views.about, name='about'),
+    path('detailct/', views.crop_details, name='detailct'),
+    path('idetail/', views.individual_deatil, name='idetail'),
 
 
 ]

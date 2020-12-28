@@ -1,12 +1,13 @@
 from django.shortcuts import render, redirect
 from django.core.serializers import serialize
 from django.http import JsonResponse, HttpResponse
-from . models import NewFieldModel
+from . models import NewFieldModel, IndicesModel
 from .util import returndataset
 from .forms import UserForm, UserLoginForm
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
+from django.contrib import messages
 
 
 def homepage(request):
@@ -90,3 +91,24 @@ def about(request):
 
 def office(request):
     return render(request, 'field/office.html')
+
+
+def crop_details(request):
+    crop_type = request.GET.get('crop_type')
+    try:
+        data = NewFieldModel.objects.filter(crop=crop_type)
+    except NewFieldModel.DoesNotExist:
+        message.error(request, 'There are no fields in the given village')
+        redirect('field:indices')
+    return render(request, 'field/details.html', {'data': data, 'type': crop_type})
+
+
+def individual_deatil(request):
+    id = request.GET.get('uid')
+    try:
+        data = NewFieldModel.objects.prefetch_related('ndvi_values').get(id=id)
+        ndvi = IndicesModel.objects.filter(crop=data)
+    except NewFieldModel.DoesNotExist:
+        redirect('field:home')
+
+    return render(request, 'field/idetails.html', {'data': data, 'ndvi': ndvi})

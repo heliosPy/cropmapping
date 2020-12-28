@@ -44,6 +44,7 @@ class CropDetail(models.Model):
         ('Cotton', 'Cotton'),
         ('Maize', 'Maize'),
         ('Cerials', 'Cerials'),
+        ('Mango', "Mango"),
         ('Others', 'Others')
     )
     CROP_STATUS = (
@@ -103,6 +104,7 @@ class NewFieldModel(models.Model):
         ('Cotton', 'Cotton'),
         ('Maize', 'Maize'),
         ('Cerials', 'Cerials'),
+        ('Mango', "Mango"),
         ('Others', 'Others')
     )
     farmer = models.CharField(max_length=50)
@@ -132,3 +134,6 @@ class IndicesModel(models.Model):
 
     def __str__(self):
         return self.name + "@" + self.crop.farmer
+
+    class Meta:
+        ordering = ('date',)

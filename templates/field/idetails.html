@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% block title %}<title>{{data.farmer}}</title>{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+    <div class="row">
+
+
+      <div class="col-12" style=" min-height: 450px">
+      <div style="margin: 20px; border: 10px solid rgba(46, 212, 241, 0.932); padding: 65px; padding-bottom: 25px; border-radius: 20px; min-height: 500px">
+         
+        <div class="container">
+            <div class="row">
+                <div class="col-4">
+                    <h4>Farmer Details</h4>
+                            <ul>
+                                <li>
+                                    <strong>Farmer Name </strong>:  {{data.farmer}}
+                                </li>
+                                <li>
+                                    <strong>Crop </strong>:   {{data.crop}}
+                                </li>
+                                <li>
+                                    <strong>Village</strong>:   {{data.village}}
+                                </li><li>
+                                    <strong>Mandal </strong>:   {{data.mandal}}
+                                </li>
+                            </ul> 
+
+
+                </div>
+                <div class="col-1"></div>
+                <div class="col-6">
+                    
+                        
+                            
+                           
+                                <h4 align="center">NDVI Time Series Values</h3>
+                                <br>
+                            <div class="container-fluid" style="font-family: Century">
+                            <div class="row" style="border: 2px solid rgb(229, 229, 235);text-align: center;font-size: 25px;background-color: #7cf29b;color: black">
+                                <div class="col-2"style="border: 1px solid black">S.No</div>
+                                <div class="col-5"style="border: 1px solid black">Date</div>
+                                <div class="col-5"style="border: 1px solid black">Ndvi Value</div>                              
+                            
+                            </div>
+                            {% for x in ndvi %}
+                                <div class="row" style="text-align: center;background-color: white;color: black" >
+                                <div class="col-2" style="border: 1px solid black;font-size: 16px">{{ forloop.counter }}</div>
+                            
+                                <div class="col-5" style="border: 1px solid black;font-size: 16px">{{ x.date }}</div>
+                                <div class="col-5" style="border: 1px solid black;font-size: 16px">{{ x.value }}</div>
+                               
+                            
+                            </div>
+                            {% endfor %}
+                            </div>
+                                
+                            
+                            
+                        
+                    
+                </div>
+            </div>
+        </div>    
+       
+
+
+
+      </div>
+      </div>
+
+    </div>
+  </div>
+{% endblock %}
