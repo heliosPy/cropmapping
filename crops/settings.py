@@ -39,9 +39,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.gis',
+    # apps
     'field.apps.FieldConfig',
+
+    # third party apps
+    'crispy_forms',
     'leaflet',
-    'djgeojson'
+    'djgeojson',
+    'chartjs',
 ]
 
 MIDDLEWARE = [
@@ -136,6 +141,7 @@ LEAFLET_CONFIG = {
     'MAX_ZOOM': 20,
     'MIN_ZOOM': 3,
     'SCALE': 'both',
+    'RESET_VIEW': False,
     'ATTRIBUTION_PREFIX': 'Powered by rsreddy',
     'TILES': [('Open Street Map', 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {'attribution': '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>', 'maxZoom': 20}),
               ('Terrain Map', 'http://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
@@ -144,3 +150,8 @@ LEAFLET_CONFIG = {
 
 
 }
+
+LOGIN_URL = 'field:login'
+
+# LOGIN_REDIRECT_URL = 'login'
+LOGOUT_REDIRECT_URL = 'field:home'

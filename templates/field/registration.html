@@ -1,0 +1,44 @@
+{% extends  'base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}<title>Registration</title>{% endblock %}
+{% block body %}
+<style>
+    #hint_id_username, #hint_id_password1 {
+        display: none;
+    }
+</style>
+<div class="container-fluid">
+    <div class="row">
+
+
+      <div class="col-12" style=" min-height: 450px">
+      <div style="margin: 20px; border: 10px solid rgba(46, 212, 241, 0.932); padding: 65px; padding-bottom: 25px; border-radius: 20px; min-height: 500px">
+        <div class="row">
+            <div class="col-3"></div>
+            <div class="col-6">
+                <div class="container">
+                    <div class="row">
+                         <div class="col align-self-center">
+                             <H4>Registration Form</H4>
+                      <form  method="post">
+                          {% csrf_token %}
+                  <div class="form-group">
+                    {{ user|crispy }}
+                  </div>
+                
+                          <div style="padding-left: 40px;">
+                  <button   type="submit" class="btn btn-primary" >Login</button></div>
+                </form>
+                    </div>
+                    </div>
+                    </div>
+            </div>
+            <div class="col-3"></div>
+        </div>
+        </div>
+        </div>
+
+         
+
+
+{% endblock %}

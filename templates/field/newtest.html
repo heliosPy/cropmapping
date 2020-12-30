@@ -145,3 +145,76 @@ var wfsLayer = L.Geoserver.wfs("http://localhost:8080/geoserver/wfs", {
     }
   });
   wfsLayer.addTo(map);
+
+
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="{% url 'field:indices' %}">Home</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'field:analysis' %}">Crop Analysis</a>
+     </li>
+     </ul>
+      <form class="form-inline" action="{% url 'field:logout' %}">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Logout</button>
+      </form>
+    </div>
+  </nav>
+
+
+  <!-- Time Series Analysis -->
+
+  <script>
+    var densityCanvas = document.getElementById("densityChart");
+   
+   Chart.defaults.global.defaultFontFamily = "Lato";
+   Chart.defaults.global.defaultFontSize = 18;
+   
+   var data = {{ndvi|safe}};
+   console.log(data);
+   
+   var densityData = {
+     label: 'Ndvi of crop',
+     data: {{ndvi|safe}},
+     backgroundColor: 'rgba(0, 99, 132, 0.6)',
+     borderWidth: 0,
+     yAxisID: "y-axis-density"
+   };
+   
+   var gravityData = {
+     label: 'Average Ndvi',
+     data: {{avg_ndvi|safe}},
+     backgroundColor: 'rgba(99, 132, 0, 0.6)',
+     borderWidth: 0,
+     yAxisID: "y-axis-gravity"
+   };
+   
+   var planetData = {
+     labels: {{labels|safe}},
+     datasets: [densityData, gravityData]
+   };
+   
+   var chartOptions = {
+     scales: {
+       xAxes: [{
+         barPercentage: 1,
+         categoryPercentage: 0.6
+       }],
+       yAxes: [{
+         id: "y-axis-density"
+       }, {
+         id: "y-axis-gravity"
+       }]
+     }
+   };
+   
+   var barChart = new Chart(densityCanvas, {
+     type: 'line',
+     data: planetData,
+     options: chartOptions
+   });

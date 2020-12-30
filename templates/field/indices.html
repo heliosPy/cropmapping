@@ -12,6 +12,26 @@
  <script src="{% static 'js/L.Geoserver.js' %}"></script>
     
 {% endblock head %}
+{% block menu %}
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="{% url 'field:indices' %}">Home</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'field:analysis' %}">Crop Analysis</a>
+   </li>
+   </ul>
+    <form class="form-inline" action="{% url 'field:logout' %}">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Logout</button>
+    </form>
+  </div>
+</nav>
+{% endblock menu %}
 {% block body %}
     <style>
         #mapid {
@@ -47,7 +67,9 @@
                 <option value="1124">Nov 24</option>   
                 <option value="1204">Dec 04</option>   
                 <option value="1209">Dec 09</option>   
-                <option value="1224">Dec 24</option>   
+                <option value="1219">Dec 19</option>     
+                <option value="1224">Dec 24</option>
+                <option value="1229">Dec 29</option>   
 
     
                 </select>
@@ -60,27 +82,30 @@
 
             <div style="margin: 10px; border: 5px solid rgb(11, 145, 18); padding: 3px; padding-bottom: 5px; border-radius: 10px; min-height: 150px; text-align: center;">
               
-              <H3 style="text-align: center;">Crop Details</H2>
-              <p>Search based on Crop Type and Location</p>               
-             
-  
-  
+              <H3 style="text-align: center;">Crop Details</H3>
+              <p>Search based on Crop Type and Location</p>
+
+          <!-- Search based on the crop type -->
           <form action="{% url 'field:detailct' %}">
               <label for="ndate">Crop Type </label>
-              <select id="ndate" name="crop_type">
-       
-              <option value="Rice">Rice</option>
-              <option value="Cotton">Cotton</option>
-              <option value="Maize">Maize</option>
-              <option value="Mango">Mango</option>
-              <option value="Vegetables">Vegetables </option>
-              <option value="Others">Others</option>  
-                
-
-  
+              <select id="ndate" name="crop_type">       
+                  <option value="Rice">Rice</option>
+                  <option value="Cotton">Cotton</option>
+                  <option value="Maize">Maize</option>
+                  <option value="Mango">Mango</option>
+                  <option value="Vegetables">Vegetables </option>
+                  <option value="Others">Others</option>             
               </select>
               <input type="submit">
           </form>
+
+          <p>Or</p>
+
+          <!-- Search based on village -->
+          <form action="{% url 'field:detailloc' %}">
+                <input  type="text" id="ndate" name="village" placeholder="Village Name" style="width: 150px;">           
+                <input type="submit" value="Search">
+        </form>
           
           
           </div>

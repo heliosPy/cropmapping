@@ -1,18 +1,48 @@
 {% extends 'base.html' %}
 
 {% block title %}<title>{{data.farmer}}</title>{% endblock %}
-
+{% block menu %}
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="{% url 'field:indices' %}">Home</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'field:analysis' %}">Crop Analysis</a>
+     </li>
+     {% if search_crop %}
+             <li class="nav-item ">
+                <a class="nav-link" href="{% url 'field:detailct' %}?crop_type={{data.crop}}">Back<span class="sr-only">(current)</span></a>
+            </li>
+        {% else %}
+            <li class="nav-item ">
+                 <a class="nav-link" href="{% url 'field:detailct' %}"?crop_type={{data.village}}">Back<span class="sr-only">(current)</span></a>
+            </li>
+        {% endif %}
+     </ul>
+      <form class="form-inline" action="{% url 'field:logout' %}">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Logout</button>
+      </form>
+    </div>
+  </nav>
+      
+       
+{% endblock menu %}
 {% block body %}
 <div class="container-fluid">
     <div class="row">
 
 
       <div class="col-12" style=" min-height: 450px">
-      <div style="margin: 20px; border: 10px solid rgba(46, 212, 241, 0.932); padding: 65px; padding-bottom: 25px; border-radius: 20px; min-height: 500px">
+      <div >
          
         <div class="container">
             <div class="row">
-                <div class="col-4">
+                <div class="col-7">
                     <h4>Farmer Details</h4>
                             <ul>
                                 <li>
@@ -27,11 +57,16 @@
                                     <strong>Mandal </strong>:   {{data.mandal}}
                                 </li>
                             </ul> 
+                      <br>
+                      <h4 align="center">NDVI Time Series </h3>
+                        <div id="container" >
+                          <canvas id="ndviChart" width="400" height="150"></canvas>
+                        </div>
 
 
                 </div>
-                <div class="col-1"></div>
-                <div class="col-6">
+                
+                <div class="col-5">
                     
                         
                             
@@ -73,4 +108,45 @@
 
     </div>
   </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
+  <script>
+   var NdviCanvas = document.getElementById("ndviChart");
+  
+  Chart.defaults.global.defaultFontFamily = "Lato";
+  Chart.defaults.global.defaultFontSize = 12;
+ 
+  
+  var ndvicrop = {
+    label: 'Ndvi',
+    data: {{ndvit|safe}},
+    backgroundColor: 'rgba(0, 99, 132, 0.6)',
+    borderWidth: 0,
+    yAxisID: "y-axis-density"
+  };
+  
+
+  var ndvidata = {
+    labels: {{labels|safe}},
+    datasets: [ndvicrop]
+  };
+  
+  var chartOptions = {
+    scales: {
+      xAxes: [{
+        barPercentage: 1,
+        categoryPercentage: 0.6
+      }],
+      yAxes: [{
+        id: "y-axis-density"
+      }]
+    }
+  };
+  
+  var barChart = new Chart(NdviCanvas, {
+    type: 'line',
+    data: ndvidata,
+    options: chartOptions
+  });
+  </script>
 {% endblock %}

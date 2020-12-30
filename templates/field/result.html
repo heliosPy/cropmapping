@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}<title>{{type}} Crop Details</title> {% endblock %}
+{% block title %}<title>{{crop}} - {{date}}</title> {% endblock %}
 
 {% block menu %}
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -27,32 +27,44 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-1"></div>
-        <div class="col-10">
-            <h3 align="center">List of {{type}} Fields</h3>
+        <div class="col-10" style="font-family: Century">
+            <h4 >List of {{crop}} Fields Under Stress </h4>
+            <hr>
+            {% if data %}
+            <ul>
+                <li>The average  ndvi values of {{crop}} fields on {{date}} is  <strong>{{avg|floatformat:3}}</strong></li>
+                <li>The below fields have ndvi values less than 0.1 of average ndvi</li>
+            </ul>
+            
             <br>
         <div class="container-fluid" style="font-family: Century">
         <div class="row" style="border: 2px solid rgb(229, 229, 235);text-align: center;font-size: 25px;background-color: #7cf29b;color: black">
             <div class="col-1"style="border: 1px solid black">ID</div>
-            <div class="col-3"style="border: 1px solid black">Farmer</div>
+            <div class="col-2"style="border: 1px solid black">Farmer</div>
             <div class="col-2"style="border: 1px solid black">Crop</div>
+            <div class='col-2' style="border: 1px solid black">Ndvi Value</div>
             <div class="col-3"style="border: 1px solid black">Village</div>
-            <div class="col-3"style="border: 1px solid black">Mandal</div>
-            
-        
+            <div class="col-2"style="border: 1px solid black">Mandal</div>
         </div>
+
         {% for x in data %}
             <div class="row" style="text-align: center;background-color: white;color: black" >
             <div class="col-1" style="border: 1px solid black;font-size: 16px">{{ forloop.counter }}</div>
-            <div class="col-3" style="border: 1px solid black;font-size: 16px"><a href="{% url 'field:idetail' %}?uid={{x.id}}">{{ x.farmer }}</a></div>
-            <div class="col-2" style="border: 1px solid black;font-size: 16px">{{ x.crop }}</div>
-            <div class="col-3" style="border: 1px solid black;font-size: 16px">{{ x.village }}</div>
-            <div class="col-3" style="border: 1px solid black;font-size: 16px">{{ x.mandal.mandal }}</div>
-           
-        
+            <div class="col-2" style="border: 1px solid black;font-size: 16px"><a href="{% url 'field:timeseries' %}?uid={{x.crop.id}}">{{ x.crop.farmer }}</a></div>
+            <div class="col-2" style="border: 1px solid black;font-size: 16px">{{ x.crop.crop }}</div>
+            <div class='col-2' style="border: 1px solid black;font-size: 16px">{{x.value }}</div>
+            <div class="col-3" style="border: 1px solid black;font-size: 16px">{{ x.crop.village }}</div>
+            <div class="col-2" style="border: 1px solid black;font-size: 16px">{{ x.crop.mandal.mandal }}</div>
         </div>
         {% endfor %}
         </div>
+        {% else %}
+        <ul>
+            <li>There are no {{crop}} fields under stress {{date}}.</li>
             
+        </ul>
+        {% endif %}
+
         </div>
         <div class="col-1"></div>
     </div>

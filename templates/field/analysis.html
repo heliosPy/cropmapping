@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+{% block title %}<title>Crop Analysis</title> {% endblock %}
+
+{% block menu %}
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="{% url 'field:indices' %}">Home</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'field:analysis' %}">Crop Analysis</a>
+     </li>
+     </ul>
+      <form class="form-inline" action="{% url 'field:logout' %}">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Logout</button>
+      </form>
+    </div>
+  </nav>
+{% endblock menu %}
+{% block body %}
+<div class="container-fluid">
+    <div class="row">
+     <div class="col-12" style=" min-height: 450px">
+      <div style="margin: 20px; border: 10px solid rgba(46, 212, 241, 0.932); padding: 65px; padding-bottom: 25px; border-radius: 20px; min-height: 500px">
+       <div class="container">
+            <div class="row">
+                <div class="col-1"> </div>
+                <div class="col-10">
+                    <H3> STRESSED CROPS   BASED ON NDVI VALUES</H3>
+                    <br>
+
+                    <form action="{% url 'field:stresscrops' %}">
+                        <label for="ndate">Crop Type </label>
+                        <select id="ndate" name="crop_type">       
+                            <option value="Rice">Rice</option>
+                            <option value="Cotton">Cotton</option>
+                            <option value="Maize">Maize</option>
+                            <option value="Mango">Mango</option>
+                            <option value="Vegetables">Vegetables </option>
+                            <option value="Others">Others</option>             
+                        </select>
+                        <label for="ndate">Date </label>
+                        <select id="ndate" name="date">
+                            <option value="1025">Oct 25</option>
+                            <option value="1030">Oct 30</option>
+                            <option value="1104">Nov 04</option>
+                            <option value="1109">Nov 09</option>
+                            <option value="1114">Nov 14 </option>
+                            <option value="1119">Nov 19</option>  
+                            <option value="1124">Nov 24</option>   
+                            <option value="1204">Dec 04</option>   
+                            <option value="1209">Dec 09</option>
+                            <option value="1219">Dec 19</option>     
+                            <option value="1224">Dec 24</option>
+                            <option value="1229">Dec 29</option>    
+                         </select>
+                        <input type="submit">
+                    </form>
+
+                    <br>
+                    <br>
+                    <p>Note:-</p>
+                    <ul>
+                        <li>Assuming crops are sowed on same period i.e.. same age</li>
+                        <li>Assuming there is no variation in climatic conditions</li>
+                        <li>Analysis is based on the average ndvi values of similar crop on that particular date</li>
+                    </ul>
+                </div>
+                <div class="col-1"> </div>
+
+                    
+            </div>
+        </div>
+      </div>    
+     </div>
+    </div>
+
+    </div>
+  
+{% endblock %}

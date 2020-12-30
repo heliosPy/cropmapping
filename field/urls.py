@@ -13,10 +13,27 @@ urlpatterns = [
     path('veg/', views.vegcrop, name='veg'),
     path('others/', views.othercrop, name='others'),
     path('count/', views.featureCount, name='count'),
+
+    # indices
     path('indices/', views.indiceshome, name='indices'),
     path('about/', views.about, name='about'),
+
+    # general crop details
     path('detailct/', views.crop_details, name='detailct'),
-    path('idetail/', views.individual_deatil, name='idetail'),
+    path('detailloc/', views.village_details, name='detailloc'),
+    path('idetail/', views.individual_deatil, name='idetail'),\
+
+    # registrations
+    path('login/', views.user_login, name='login'),
+    path('register/', views.user_register, name='register'),
+    path('logout/', views.user_logout, name='logout'),
+
+    # crop analysis
+    path('analysis/', views.analysis, name='analysis'),
+    path('stresscrops/', views.stressed_crops, name='stresscrops'),
+    path('timeseries/', views.timeseries, name='timeseries'),
+    path('compare/', views.BaseLineChartView.as_view(), name='compare')
+
 
 
 ]

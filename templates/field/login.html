@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block title %}<title>Login</title>{% endblock %}
+{%  block body %}
+<div class="container-fluid">
+    <div class="row">
+
+
+      <div class="col-12" style=" min-height: 450px">
+      <div style="margin: 20px; border: 10px solid rgba(46, 212, 241, 0.932); padding: 65px; border-radius: 20px; min-height: 450px">
+        <div style="  padding: 8px; font-family: Century">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-6">{{ x }}
+                    </div>
+                    <div class ="col-6" style="font-size: 35px; color: darkslategrey; padding-left: 80px;"> Login</div>
+        
+                </div>
+                <div class="row" style="font-size: 20px">
+                    <div class="col-6" > <h5>For SignUp Click Button </h5><form action="{% url 'field:register' %}" >
+                        <button type="submit">REGESTRATION</button>
+                    </form></div>
+                <div class="col-6" style="padding: 20px ;border: 5px">
+                     <div class="container">
+            <div class="row">
+                 <div class="col align-self-center">
+              <form  method="post">
+                  {% csrf_token %}
+          <div class="form-group">
+            {{ loginform|crispy }}
+          </div>
+        
+                  <div style="padding-left: 60px;">
+          <button   type="submit" class="btn btn-primary" >Login</button></div>
+        </form>
+            </div>
+            </div>
+            </div>
+                </div>
+                </div>
+            </div>
+            </div>
+      </div>
+      </div>
+
+    </div>
+  </div>
+
+
+<!-- copy form the hrm login page -->
+
+{% endblock %}
