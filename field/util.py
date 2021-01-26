@@ -37,19 +37,16 @@ def load_ndvi_data_to_database(csv_file_name, NewFieldModel, IndicesModel):
     csv_reader = csv.DictReader(file)
     line_c = 0
     for row in csv_reader:
-        if line_c == 0:
-            line_c = 1
-        else:
-            farmer = row['Farmer']
-            crop = row['Crop']
-            village = row['Village']
-            try:
-                cropp = NewFieldModel.objects.get(
-                    farmer=farmer, crop=crop, village=village)
-            except NewFieldModel.DoesNotExist:
-                continue
-            name = 'NDVI'
-            value = row['NDVI']
-            date = datetime.datetime.strptime(row['Date'], "%Y-%m-%d").date()
-            IndicesModel.objects.create(
-                name=name, crop=cropp, date=date, value=value)
+        farmer = row['Farmer']
+        crop = row['Crop']
+        village = row['Village']
+        try:
+            cropp = NewFieldModel.objects.get(
+                farmer=farmer, crop=crop, village=village)
+        except NewFieldModel.DoesNotExist:
+            continue
+        name = 'NDVI'
+        value = row['Ndvi']
+        date = datetime.datetime.strptime(row['Date'], "%Y-%m-%d").date()
+        IndicesModel.objects.create(
+            name=name, crop=cropp, date=date, value=value)

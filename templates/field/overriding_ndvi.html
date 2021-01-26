@@ -38,11 +38,45 @@
             width: 100%;
             height: 500px;
         }
+        .formblock {
+            max-width: 250px;
+            background-color: white;
+            border: 1px solid white;
+            position: absolute;
+            top: 100px;
+            left: 10px;
+            padding: 10px;
+            z-index:999;
+            box-shadow: 0 1p px black;
+            border-radius: 5px;
+            width:100%;
+        }
+        .input{
+            box-sizing: border-box;
+            padding:10px;
+            width:100%;
+            font-size: 15px;
+            border-radius: 3px;
+        }
+        #cropform{
+            padding:0;
+            margin:0;
+        }
+
+       
+
+
     </style>
     <div class="container-fluid">
         <div class="row">
             <div class="col-9">
                 <div id="mapid"></div>
+                <div class="formblock">
+                    <form id='cropform'>
+                        <input type="text" name="croptype" id='croptp' placeholder="choose crop">
+                        <button style="display: none;" type="submit">Get Crop WFS</button>
+                    </form>
+                </div>
             </div>
             <div class="col-3"> 
               <div style="margin: 10px; border: 5px solid rgb(11, 145, 18); padding: 3px; padding-bottom: 5px; border-radius: 10px; min-height: 150px; text-align: center;">
@@ -125,7 +159,8 @@
           attribution:
             "&copy; <a href='https://openstreetmap.org/copyright'> Openstreet map</a> contributors",
         }
-      ).addTo(mymap);        
+      ).addTo(mymap);
+
         var Terrain = L.tileLayer(
             'http://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
                   attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community', 'maxZoom': 20}
@@ -135,6 +170,9 @@
         "osm": osm,
         "Terrain": Terrain       
       };
+     
+      
+      L.control.layers(baseLayers).addTo(mymap);
       var wfsLayer = L.Geoserver.wfs("http://localhost:8080/geoserver/wfs", {
                             layers: "ndvi:fields",
                             fitLayer: true,
@@ -143,6 +181,7 @@
                               color: "#121211",
                               fillOpacity: "0",
                               opacity: "1",
+                              zINdex: 999,
                             },
                             onEachFeature: function (feature, layer) {
                               layer.bindPopup(
@@ -154,11 +193,26 @@
                                   "</pre>"
                               );
                             }
-                        });
-      var overlays = {
-        'Crops': wfsLayer
-      }
-      L.control.layers(baseLayers, overlays,{autoZIndex: true}).addTo(mymap);
+                        }).addTo(mymap);
+
+  
+
+
+
+
+      //Geoserver request
+      function NdviWmsLayer(layer){
+
+        // creating a new map
+        mymap = L.map('mapid').setView([18.42615364777555, 78.81336879053919], 11);
+
+        osm = L.tileLayer(
+        "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+        {
+          attribution:
+            "&copy; <a href='https://openstreetmap.org/copyright'> Openstreet map</a> contributors",
+        }
+      ).addTo(mymap);
 
       var layerLegend = L.Geoserver.legend(
         "http://localhost:8080/geoserver/wms",
@@ -170,42 +224,41 @@
 
       layerLegend.addTo(mymap);
 
-
-
-
-      //Geoserver request
-      function NdviWmsLayer(layer){
+      // sending a wms request to geoserver
           
           var ndviwms = L.Geoserver.wms("http://localhost:8080/geoserver/wms",
             {layers: layer,
               transparent: true,
+          
       });
       ndviwms.addTo(mymap);
-      }
-
       
-
-    
-  
-
+      }
 
   // sending ajax request when submiting the form
 
     var select = $("#ndvi_date");
     select.submit(function(event){
         event.preventDefault();
+
+         // removing existing map
+         mymap.remove()
+         
         var crop= $('#ndate').val();
         var layer = "ndvi:" + crop;
-        NdviWmsLayer(layer)
-        
-    
-                 
-        })
+        NdviWmsLayer(layer)           
+        });
 
 
-
-
+        // geting form output
+        function submitForm(event){
+          event.preventDefault();
+          console.log('formsubmited');
+        };
+       var inpu = $("#cropform").submit(submitForm);
+       
     </script>
+
 
    
     

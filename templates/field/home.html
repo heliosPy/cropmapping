@@ -27,20 +27,13 @@
     function map_init_basic(fmap, options){
         
 
-        $.getJSON("{% url 'field:allcrops' %}", function(data){
-            var allc = L.geoJson(data,{
-                onEachFeature:function(feature, layer){
-                    layer.bindPopup("<strong>" + feature.properties.farmer + " " + feature.properties.crop +"</strong>")
-                }
-            }).addTo(fmap);
-            controlLayers.addOverlay(allc, 'AllCrops');
-        });
+      
         $.getJSON("{% url 'field:rice' %}", function(data){
             var rice = L.geoJson(data,{
                 onEachFeature:function(feature, layer){
                     layer.bindPopup("<strong>" + feature.properties.farmer + " " + feature.properties.crop +"</strong>")
                 }
-            }).addTo(fmap);
+            });
             controlLayers.addOverlay(rice, 'Rice');
         });
         $.getJSON("{% url 'field:maize' %}", function(data){
@@ -48,7 +41,7 @@
                 onEachFeature:function(feature, layer){
                     layer.bindPopup("<strong>" + feature.properties.farmer + " " + feature.properties.crop +"</strong>")
                 }
-            }).addTo(fmap);
+            });
             controlLayers.addOverlay(maize, 'Maize');
         });
         $.getJSON("{% url 'field:mango' %}", function(data){
@@ -56,7 +49,7 @@
                 onEachFeature:function(feature, layer){
                     layer.bindPopup("<strong>" + feature.properties.farmer + " " + feature.properties.crop +"</strong>")
                 }
-            }).addTo(fmap);
+            });
             controlLayers.addOverlay(mango, 'Mango');
         });
         $.getJSON("{% url 'field:cotton' %}", function(data){
@@ -64,7 +57,7 @@
                 onEachFeature:function(feature, layer){
                     layer.bindPopup("<strong>" + feature.properties.farmer + " " + feature.properties.crop +"</strong>")
                 }
-            }).addTo(fmap);
+            });
             controlLayers.addOverlay(cotton, 'cotton');
         });
         $.getJSON("{% url 'field:veg' %}", function(data){
@@ -72,7 +65,7 @@
                 onEachFeature:function(feature, layer){
                     layer.bindPopup("<strong>" + feature.properties.farmer + " " + feature.properties.crop +"</strong>")
                 }
-            }).addTo(fmap);
+            });
             controlLayers.addOverlay(veg, 'Vegetables');
         });
         $.getJSON("{% url 'field:others' %}", function(data){
@@ -80,7 +73,7 @@
                 onEachFeature:function(feature, layer){
                     layer.bindPopup("<strong>" + feature.properties.farmer + " " + feature.properties.crop +"</strong>")
                 }
-            }).addTo(fmap);
+            });
             controlLayers.addOverlay(others, 'Other Crops');
         });
       
